@@ -1,0 +1,11 @@
+<ui>
+  <screen>
+    <box width=10 height=10>
+      <text>hello world!</text>
+      <box hoverable></box>
+    </box>
+  </screen>
+  <screen>
+    <text clickable>hello world!</text>
+  </screen>
+</ui>
