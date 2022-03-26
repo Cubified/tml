@@ -1,8 +1,8 @@
 <ui>
   <screen>
-    <box width=10 height=10>
-      <text>hello world!</text>
-      <box hoverable></box>
+    <box width=10 height=10 background="blue">
+      <text color="red">hello world!</text>
+      <box id="empty" clickable hoverable></box>
     </box>
   </screen>
   <screen>

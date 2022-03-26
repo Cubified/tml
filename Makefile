@@ -2,8 +2,8 @@ all: tml
 
 CC=cc
 
-LIBS=
-CFLAGS=-O3 -pipe
+LIBS=-lm
+CFLAGS=-O3 -pipe -ansi -pedantic
 DEBUGCFLAGS=-Og -pipe -g
 
 INPUT=tml.c
