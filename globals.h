@@ -79,6 +79,10 @@ void _writebox(char *out_c, char *out_e, struct tml_node_t *node){
   char tmp_click[64],
        tmp_hover[64];
 
+  if(node->w == 1 && node->h == 1){
+    printf("Warning: Box with id \"%s\" has no width or height property and will use the default value of 1, this probably is unintended.\n", node->id);
+  }
+
   sprintf(tmp_click, "box_%s_click", node->id);
   sprintf(tmp_hover, "box_%s_hover", node->id);
 
@@ -210,11 +214,17 @@ void _setscreen(){
   g_screen++;
 }
 
+void _newcenter(struct tml_node_t *node, char *start, int len){
+  node->x = -1;
+  node->y = -1;
+}
+
 struct tml_tag_t tags[] = {
   { "ui",     NULL,       NULL,       NULL },
   { "screen", _setscreen, NULL,       "ui" },
   { "box",    NULL,       _writebox,  "screen" },
-  { "text",   _newtext,   _writetext, "screen" }
+  { "text",   _newtext,   _writetext, "screen" },
+  { "center", _newcenter,  _writebox,  "screen" }
 };
 
 struct tml_color_t colors[] = {
@@ -268,6 +278,10 @@ void _background(struct tml_node_t *node, char *val){
 void _color(struct tml_node_t *node, char *val){
   _copycolor(node, val, '3');
 }
+void _center(struct tml_node_t *node, char *val){
+  node->x = -1;
+  node->y = -1;
+}
 
 struct tml_attr_t attrs[] = {
   { "id", _id },
@@ -278,7 +292,8 @@ struct tml_attr_t attrs[] = {
   { "width", _width },
   { "height", _height },
   { "background", _background },
-  { "color", _color }
+  { "color", _color },
+  { "center", _center }
 };
 
 #endif

@@ -1,0 +1,7 @@
+<ui>
+  <screen>
+    <box center width="30" height="15" background="red">
+      <text center color="green" background="red">hello tml!</text>
+    </box>
+  </screen>
+</ui>

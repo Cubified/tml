@@ -307,7 +307,7 @@ void vec_swap_(char **data, int *length, int *capacity, int memsz,
  */
 #define MAXCACHESIZE 65535
 
-#define CURSOR_Y(b) (b->y+(n+1)+(u->canscroll ? u->scroll : 0))
+#define CURSOR_Y(b) ((b->y == UI_CENTER_Y ? ui_center_y(b->h, u) : b->y)+(n+1)+(u->canscroll ? u->scroll : 0))
 
 #define box_contains(x, y, b) (x >= b->x && x <= b->x + b->w && y >= b->y && y <= b->y + b->h)
 
@@ -472,8 +472,8 @@ int ui_add(
 
   b->id = u->id++;
 
-  b->x = (x == UI_CENTER_X ? ui_center_x(w, u) : x);
-  b->y = (y == UI_CENTER_Y ? ui_center_y(h, u) : y);
+  b->x = x;
+  b->y = y;
   b->w = w;
   b->h = h;
 
@@ -527,7 +527,7 @@ void ui_clear(ui_t *u){
  */
 void ui_draw_one(ui_box_t *tmp, int flush, ui_t *u){
   char *buf, *tok;
-  int n = -1;
+  int n = -1, pos;
 
   if(tmp->screen != u->screen) return;
   
@@ -545,11 +545,18 @@ void ui_draw_one(ui_box_t *tmp, int flush, ui_t *u){
   }
   tok = strtok(buf, "\n");
   while(tok != NULL){
-    if(tmp->x > 0 &&
-       tmp->x < u->ws.ws_col &&
-       CURSOR_Y(tmp) > 0 &&
-       CURSOR_Y(tmp) < u->ws.ws_row){
-      printf("\x1b[%i;%iH%s", CURSOR_Y(tmp), tmp->x, tok);
+    if((tmp->x == UI_CENTER_X ||
+       (tmp->x > 0 &&
+        tmp->x < u->ws.ws_col)) &&
+       (tmp->y == UI_CENTER_Y ||
+       (CURSOR_Y(tmp) > 0 &&
+        CURSOR_Y(tmp) < u->ws.ws_row))){
+      printf(
+        "\x1b[%i;%iH%s",
+        CURSOR_Y(tmp),
+        tmp->x == UI_CENTER_X ? ui_center_x(tmp->w, u) : tmp->x,
+        tok
+      );
       n++;
     }
     tok = strtok(NULL, "\n");

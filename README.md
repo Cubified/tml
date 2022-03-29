@@ -4,6 +4,8 @@
 
 This repository provides a compiler that turns TML markup into C code that works on top of my terminal UI library [tuibox](https://github.com/Cubified/tuibox).
 
+**Note**:  This project is currently a work in progress.
+
 ## Demo
 
 Markup:
@@ -11,8 +13,8 @@ Markup:
 ```
 <ui>
   <screen>
-    <box x="10" y="5" width="30" height="15" background="red">
-      <text color="green">hello tml!</text>
+    <box center width="30" height="15" background="red">
+      <text>hello tml!</text>
     </box>
   </screen>
 </ui>
@@ -20,7 +22,7 @@ Markup:
 
 Compiled output:
 
-![TODO](TODO)
+![Demo](https://github.com/Cubified/tml/blob/main/demo.png)
 
 ## Features
 
@@ -54,9 +56,14 @@ This produces `app.c` and `tml_events.h` in the current working directory, which
 
 Adding interactivity is done by editing `tml_events.h` -- refer to `tuibox`'s [demos](https://github.com/Cubified/tuibox/blob/main/demos/demo_drag.c) on to how best to do this.
 
+## Documentation
+
+Coming soon!
+
 ## To-Do
 
  - Demo image
  - Proper layout engine
  - Better error messages
  - More comprehensive tests
+ - Documentation

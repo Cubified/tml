@@ -142,8 +142,9 @@ int main(int argc, char **argv){
 
       g_stack[g_sind] = malloc(sizeof(struct tml_node_t));
       g_stack[g_sind]->id = id();
-      g_stack[g_sind]->x = 1;
-      g_stack[g_sind]->y = 1;
+      /* TODO */
+      g_stack[g_sind]->x = g_sind == 0 ? 1 : g_stack[g_sind-1]->x;
+      g_stack[g_sind]->y = g_sind == 0 ? 1 : g_stack[g_sind-1]->y;
       g_stack[g_sind]->w = 1;
       g_stack[g_sind]->h = 1;
       g_stack[g_sind]->data[0] = '\0';
@@ -219,7 +220,7 @@ write:;
 
   free(buf);
 
-  printf("Successfully parsed \"%s\".\n  Please edit \"tml_events.h\" to add event handlers.\n", argv[1]);
+  printf("Successfully parsed \"%s\".\n  Please edit \"tml_events.h\" to add event handlers,\n  and copy over tuibox.h in order to compile.\n", argv[1]);
 
   return 0;
 }
